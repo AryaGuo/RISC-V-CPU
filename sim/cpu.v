@@ -10,6 +10,7 @@
 `include "mem_wb.v"
 `include "ctrl.v"
 `include "mem_ctrl.v"
+`include "cache.v"
 
 module cpu(
 
@@ -104,6 +105,10 @@ module cpu(
 	wire [`RegAddrBus]			reg1_addr;
 	wire [`RegAddrBus]			reg2_addr;
   
+	wire						hit;
+	wire						cache_op;
+	wire[`InstBus]				cache_data;
+
 	pc_reg pc_reg0(
 		.clk(clk_in),
 		.rst(rst_in),
@@ -335,7 +340,20 @@ module cpu(
 		.mem_done       (mem_done),
 		.rw_o        	(mem_wr),
 		.addr_o         (mem_a),
-		.data_o         (mem_dout)
+		.data_o         (mem_dout),
+		.cache_op_o		(cache_op),
+		.hit			(hit),
+		.inst_i 		(cache_data)
+	);
+
+	cache cache0(
+		.rst    (rst_in),
+		.clk 	(clk_in),
+		.op_i   (cache_op),
+		.addr_i (pc),
+		.data_i (if_inst_i),
+		.data_o (cache_data),
+		.hit    (hit)
 	);
 
 endmodule

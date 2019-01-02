@@ -19,6 +19,11 @@ module mem_ctrl(
 //from ram
 	input [`DATA_WIDTH-1:0]			get_data_i,
 
+//from cache
+	input 							hit,
+	input [`InstBus]				inst_i,
+	input 							cache_done_i,
+
 //to pc_reg
 	output reg 						if_done,
 
@@ -32,7 +37,10 @@ module mem_ctrl(
 //to ram
 	output reg 						rw_o,
 	output reg [`MemAddrBus]		addr_o,
-	output reg [`DATA_WIDTH-1:0]	data_o
+	output reg [`DATA_WIDTH-1:0]	data_o,
+
+//to cache
+	output reg						cache_op_o
 	
 );
 
@@ -74,6 +82,7 @@ module mem_ctrl(
 	always @(*) begin
 		case (state) 
 		STATE_IDLE: begin
+			cache_op_o	   <= `rw_Read;
 			case(mem_op_i)
 				`MemRead: begin
 					case(mem_sel_i)
@@ -206,6 +215,16 @@ module mem_ctrl(
 			nxt_state	   <= STATE_READ_4;
 			base 		   <= pc_i;
 			doing		   <= 0;
+		end else if(doing == 0 && hit) begin
+			// $display("%d", inst_o);
+			if_done        <= `Done;
+			inst_o         <= inst_i;
+			mem_get_data_o <= `ZeroWord;
+			mem_done       <= `Busy;
+			rw_o    	   <= `rw_Read;
+			addr_o		   <= `ZeroMemAddr;
+			data_o         <= `ZeroWord;
+			nxt_state	   <= STATE_IDLE;
 		end else begin
 			if_done        <= `Busy;
 			inst_o         <= `NopInst;
@@ -287,11 +306,13 @@ module mem_ctrl(
 					mem_done       <= `Busy;
 					inst_o         <= {data_3, data_2, data_1, data_0};
 					mem_get_data_o <= `ZeroWord;
+					cache_op_o	   <= `rw_Write;
 				end
 				1: begin
 					if_done        <= `Busy;
 					mem_done       <= `Done;
 					inst_o         <= `NopInst;
+					cache_op_o	   <= `rw_Read;
 					case (mem_sel_i)
 						`MemSelWord: begin
 							mem_get_data_o <= {data_3, data_2, data_1, data_0};

@@ -1,34 +1,30 @@
 [*]
 [*] GTKWave Analyzer v3.3.94 (w)1999-2018 BSI
-[*] Sun Dec 23 10:51:12 2018
+[*] Wed Jan  2 07:00:52 2019
 [*]
-[dumpfile] "/Users/guowenxuan/文档/学习资料/体系结构/Arch2018-master/riscv/sim/main.vcd"
-[dumpfile_mtime] "Sun Dec 23 10:46:27 2018"
-[dumpfile_size] 113577
-[savefile] "/Users/guowenxuan/文档/学习资料/体系结构/Arch2018-master/riscv/sim/main.gtkw"
-[timestart] 112610
+[dumpfile] "/Users/guowenxuan/文档/学习资料/体系结构/Arch2018-master/RISC-V-CPU/sim/main.vcd"
+[dumpfile_mtime] "Wed Jan  2 07:00:30 2019"
+[dumpfile_size] 160517
+[savefile] "/Users/guowenxuan/文档/学习资料/体系结构/Arch2018-master/RISC-V-CPU/sim/main.gtkw"
+[timestart] 379110
 [size] 1440 855
 [pos] -1 -1
-*-13.257524 132190 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+*-12.257524 388600 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] testbench.
 [treeopen] testbench.top.
 [treeopen] testbench.top.cpu0.
+[treeopen] testbench.top.cpu0.cache0.
 [sst_width] 193
 [signals_width] 350
 [sst_expanded] 1
-[sst_vpaned_height] 324
+[sst_vpaned_height] 616
 @28
 testbench.top.cpu0.regfile1.clk
 testbench.top.cpu0.ctrl0.stall_req_if
 testbench.top.cpu0.ctrl0.stall_req_mem
 testbench.top.cpu0.regfile1.we
-@24
-testbench.top.cpu0.regfile1.wr_addr[4:0]
-testbench.top.cpu0.mem_wb0.wb_wd[4:0]
-testbench.top.cpu0.mem_wb0.mem_wd[4:0]
 @22
-testbench.top.cpu0.mem_wb0.mem_wdata[31:0]
-testbench.top.cpu0.mem_wb0.wb_wdata[31:0]
+testbench.top.cpu0.regfile1.wr_addr[4:0]
 testbench.top.cpu0.regfile1.wr_data[31:0]
 @28
 testbench.top.cpu0.pc_reg0.branch_taken_i
@@ -60,7 +56,19 @@ testbench.top.cpu0.ex0.base_i[31:0]
 testbench.top.cpu0.ex0.offset_i[31:0]
 testbench.top.cpu0.id0.reg1_addr_o[4:0]
 testbench.top.cpu0.id0.reg1_data_i[31:0]
-@29
+@28
 testbench.top.cpu0.id0.reg1_read_o
+testbench.top.cpu0.mem_ctrl0.hit
+testbench.top.cpu0.mem_ctrl0.state[2:0]
+@22
+testbench.top.cpu0.mem_ctrl0.inst_i[31:0]
+@28
+testbench.top.cpu0.cache0.op_i
+@22
+testbench.top.cpu0.cache0.addr_i[31:0]
+testbench.top.cpu0.cache0.data_i[31:0]
+testbench.top.cpu0.cache0.data_o[31:0]
+@28
+testbench.top.cpu0.cache0.write_done
 [pattern_trace] 1
 [pattern_trace] 0
